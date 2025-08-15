@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Grapevine",
@@ -9,13 +10,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children : React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="max-h-screen flex flex-col justify-between">
+      <body className="h-screen flex flex-col justify-between">
         <div className="m-4">
           {children}
         </div>
         <div className="sticky bottom-0 bg-(--background)">
-          <ul className="flex flex-row justify-around p-4 border-t-2 border-purple-500">
-            <li>Events</li>
+          <ul className="flex flex-row justify-around p-4 border-t-2 border-purple-700">
+            <Link href={`/`}>Events</Link>
             <li>Search</li>
             <li>Profile</li>
           </ul>
