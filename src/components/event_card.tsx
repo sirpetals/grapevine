@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Tag from "./tag";
 
 export default function EventCard({ event }: { event: any }) {
     const hostClubs = event.clubs.map((club: any) => {
@@ -19,6 +20,9 @@ export default function EventCard({ event }: { event: any }) {
                 </div>
 
                 <p>{trimmedDescription + (trimmedDescription == event.description ? "" : "...")}</p>
+                <div className="flex flex-row">
+                    {event.tags?.map((tag: String, index: number) => <Tag key={index} text={tag}/>)}
+                </div>
             </div>
         </Link>
     );
