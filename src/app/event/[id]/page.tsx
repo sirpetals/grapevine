@@ -25,7 +25,7 @@ export default async function EventDescription({
             <p className="text-xl font-bold">Hosted by {clubNames?.join(", ")}</p>
 
             <div className="mt-3 font-bold">
-                <p>🗓️: {new Date(Date.parse(eventData.datetime)).toLocaleString()}</p>
+                {eventData.datetime != null ? (<p>🗓️: {new Date(Date.parse(eventData.datetime)).toLocaleString("en-AU")}</p>) : null}
                 <p>📍: {eventData.location}</p>
             </div>
 
