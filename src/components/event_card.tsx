@@ -16,7 +16,7 @@ export default function EventCard({ event }: { event: any }) {
                 <p className="text-md font-bold">Hosted by {hostClubs.join(", ")}</p>
 
                 <div className="my-3 font-bold">
-                    {event.datetime != null ? (<p>🗓️: {new Date(Date.parse(event.datetime)).toLocaleString("en-AU")}</p>) : null}
+                    {event.datetime != null ? (<p>🗓️: {new Date(Date.parse(event.datetime)).toLocaleString("en-AU", {timeZone: "Australia/Brisbane"})}</p>) : null}
                     <p>📍: {event.location}</p>
                 </div>
 
