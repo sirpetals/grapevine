@@ -12,13 +12,13 @@ export default function Search() {
   async function search() {
     const supabase = createClient();
     if (field == "name") {
-      const results = await supabase.from("events").select("*, clubs:host_events(clubs(name))").ilike("name", `%${value}%`).gt("datetime", new Date().toISOString());
+      const results = await supabase.from("events").select("*, clubs:host_events(clubs(name))").ilike("name", `%${value}%`).or(`datetime.gte.${new Date().toISOString()},datetime.is.NULL`);
 
       if (results.error == null) {
         setEvents(results.data);
       }
     } else if (field == "tags") {
-      const results = await supabase.from("events").select("*, clubs:host_events(clubs(name))").overlaps("tags", value.split(", ")).gt("datetime", new Date().toISOString());
+      const results = await supabase.from("events").select("*, clubs:host_events(clubs(name))").overlaps("tags", value.split(", ")).or(`datetime.gte.${new Date().toISOString()},datetime.is.NULL`);
 
       if (results.error == null) {
         setEvents(results.data);
@@ -29,7 +29,7 @@ export default function Search() {
   return (
     <div>
       <h1 className="text-4xl font-bold">Search</h1>
-      <div className="flex flex-row justify-between my-3">
+      <div className="flex flex-col justify-between my-3 md:flex-row">
         <div className="flex flex-row">
           <select onChange={(e) => setField(e.target.value)} value={field} className="border-purple-700 border-2 rounded-2xl p-2">
             <option value="name">Name</option>
@@ -37,12 +37,12 @@ export default function Search() {
           </select>
           <input 
             type="text" onChange={(e) => setValue(e.target.value)} value={value}
-            className="border-purple-700 border-2 rounded-2xl p-2 mx-2"
+            className="border-purple-700 border-2 rounded-2xl p-2 mx-2 flex-1"
           />
         </div>
         <button 
           onClick={search}
-          className="bg-purple-700 p-3 rounded-2xl text-lg"
+          className="bg-purple-700 p-3 my-3 md:my-0 rounded-2xl text-lg"
         >
           Search
         </button>
