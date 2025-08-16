@@ -10,10 +10,13 @@ export default function LikeButton({ eventId }: { eventId: number }) {
 
   const loadLikes = async () => {
     const { data: userData } = await supabase.auth.getUser();
-    const { data } = await supabase.from("students").select("favourites").eq("id", userData.user?.id).single();
 
-    if (data?.favourites.includes(eventId)) {
-      setLiked(true);
+    if (userData.user != null) {
+      const { data } = await supabase.from("students").select("favourites").eq("id", userData.user?.id).single();
+  
+      if (data?.favourites.includes(eventId)) {
+        setLiked(true);
+      }
     }
   }
   useEffect(() => {
@@ -23,16 +26,19 @@ export default function LikeButton({ eventId }: { eventId: number }) {
   async function handleLike(event: React.MouseEvent) {
     event.stopPropagation();
     const { data: userData } = await supabase.auth.getUser();
-    const { data } = await supabase.from("students").select("favourites").eq("id", userData.user?.id).single();
-    
-    let newFavourites = [];
-    if (liked) {
-      newFavourites = data?.favourites.filter((id: number) => id != eventId);
-    } else {
-      newFavourites = [...data?.favourites, eventId];
+
+    if (userData.user != null) {
+      const { data } = await supabase.from("students").select("favourites").eq("id", userData.user?.id).single();
+      
+      let newFavourites = [];
+      if (liked) {
+        newFavourites = data?.favourites.filter((id: number) => id != eventId);
+      } else {
+        newFavourites = [...data?.favourites, eventId];
+      }
+      setLiked(!liked)
+      await supabase.from("students").update({favourites: newFavourites}).eq("id", userData.user?.id);
     }
-    setLiked(!liked)
-    await supabase.from("students").update({favourites: newFavourites}).eq("id", userData.user?.id);
   }
 
   return (

@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children : React.ReactNode })
   return (
     <html lang="en">
       <body className="h-screen w-screen flex flex-col justify-between">
-        <div className="m-4 flex-1">
+        <div className="p-4 flex-1 overflow-x-scroll">
           {children}
         </div>
         <div className="sticky bottom-0 bg-(--background)">
