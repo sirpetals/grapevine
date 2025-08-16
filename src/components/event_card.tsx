@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Tag from "./tag";
+import LikeButton from "./like_button";
 
 export default function EventCard({ event }: { event: any }) {
     const hostClubs = event.clubs.map((club: any) => {
