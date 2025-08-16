@@ -16,9 +16,9 @@ export default function RootLayout({ children }: { children : React.ReactNode })
         </div>
         <div className="sticky bottom-0 bg-(--background)">
           <ul className="flex flex-row justify-around p-4 border-t-2 border-purple-700">
-            <Link href={"/"}>Events</Link>
-            <Link href={"/search"}>Search</Link>
-            <Link href={"/profile"}>Profile</Link>
+            <li><Link href={"/"}>Events</Link></li>
+            <li><Link href={"/search"}>Search</Link></li>
+            <li><Link href={"/profile"}>Profile</Link></li>
           </ul>
         </div>
       </body>
