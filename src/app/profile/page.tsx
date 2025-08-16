@@ -17,7 +17,7 @@ export default function Favourites() {
     const loadUser = async () => {
       const { data } = await supabase.auth.getUser();
       
-      if (data.user == null || user == null) {
+      if (data.user == null) {
         router.push("/login")
       } else {
         const { data: userData } = await supabase.from("students").select("*").eq("id", data.user.id).single();
@@ -31,11 +31,11 @@ export default function Favourites() {
     }
 
     loadUser();
-  }, [user]);
+  }, []);
 
   async function signOut() {
     await supabase.auth.signOut();
-    setUser(null);
+    router.push("/login");
   }
 
   return (
