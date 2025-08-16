@@ -10,7 +10,7 @@ async function getLumaEvents(url: string) {
   const elements = await document("div.schedule").find(".event-link.content-link")
   const info = await Promise.all(
     elements.map(async (i, x) => {
-      const eventInfo = await readLumaEvent(document, x, url);
+      const eventInfo = await readLumaEvent(document, x);
       return eventInfo;
     }
   ));
@@ -18,9 +18,11 @@ async function getLumaEvents(url: string) {
   return {clubName: clubName.trim(), records: info};
 }
 
-async function readLumaEvent(document: cheerio.CheerioAPI, elem: any, baseUrl: string) {
+async function readLumaEvent(document: cheerio.CheerioAPI, elem: any) {
   const eventPage = document(elem).attr("href");
-  const { data } = await axios.get(`https://lu.ma${eventPage}`);
+
+  const url = `https://lu.ma${eventPage}`;
+  const { data } = await axios.get(url);
   const page = cheerio.load(data);
 
   const title = page("h1.title").text();
@@ -29,12 +31,11 @@ async function readLumaEvent(document: cheerio.CheerioAPI, elem: any, baseUrl: s
   const description = page("div.event-about-card").find(".content").find(".spark-content").children().map((i, x) => document(x).text()).toArray().join("\n");
   const image = page("div.cover-image").find("img").attr("src");
 
-  return {name: title, description: description, image: image, location: location, tags: ["UQIES"]};
+  return {name: title, description: description, image: image, location: location, tags: ["UQIES"], ticket_link: url};
 }
 
 export async function GET(request: Request) {
   const supabase = await createServiceClient();
-  const body = JSON.parse(await request.text());
 
   // UQIES - Luma
   const {data: clubId} = await supabase.from("clubs").select("id").eq("name", "UQIES").single();

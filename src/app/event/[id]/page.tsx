@@ -1,6 +1,6 @@
 import LikeButton from "@/src/components/like_button";
 import Tag from "@/src/components/tag";
-import { createClient } from "@/utils/supabase/server";
+import { createClientServer } from "@/utils/supabase/server";
 
 export default async function EventDescription({
     params 
@@ -8,7 +8,7 @@ export default async function EventDescription({
     params: Promise<{id: number}>
 }) {
     const { id } = await params;
-    const supabase = await createClient();
+    const supabase = await createClientServer();
     const { data: eventData } = await supabase.from("events").select().eq("id", id).single();
     const { data: clubData } = await supabase.from("host_events").select("clubs(*)").eq("event_id", id);
 

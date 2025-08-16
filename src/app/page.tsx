@@ -1,8 +1,8 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClientServer } from "@/utils/supabase/server";
 import EventCard from "@/src/components/event_card";
 
 export default async function Events() {
-  const supabase = await createClient();
+  const supabase = await createClientServer();
   const { data } = await supabase.from("events").select("*, clubs:host_events(clubs(name))").or(`datetime.gte.${new Date().toISOString()},datetime.is.NULL`);
 
   return (
