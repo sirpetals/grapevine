@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import EventCard from "@/src/components/event_card";
+import Image from "next/image";
 
 export default function Search() {
   const [field, setField] = useState("name");
@@ -31,14 +32,17 @@ export default function Search() {
       <h1 className="text-4xl font-bold">Search</h1>
       <div className="flex flex-col justify-between my-3 md:flex-row">
         <div className="flex flex-row">
-          <select onChange={(e) => setField(e.target.value)} value={field} className="border-purple-700 border-2 rounded-2xl p-2">
+          <select onChange={(e) => setField(e.target.value)} value={field} name="field" className="border-purple-700 border-2 rounded-2xl p-2">
             <option value="name">Name</option>
             <option value="tags">Tags</option>
           </select>
-          <input 
-            type="text" onChange={(e) => setValue(e.target.value)} value={value}
-            className="border-purple-700 border-2 rounded-2xl p-2 mx-2 flex-1"
-          />
+          <div className="border-purple-700 border-2 rounded-2xl p-2 mx-2 flex-1 flex flex-row">
+            <Image src="/search.svg" width={30} height={30} alt="search icon" className="mr-2"/>
+            <input 
+              type="text" onChange={(e) => setValue(e.target.value)} value={value} name="value" placeholder="Search"
+              className="flex-1 text-xl"
+            />
+          </div>
         </div>
         <button 
           onClick={search}

@@ -41,9 +41,12 @@ export default function Favourites() {
   return (
     <div>
       <h1 className="text-4xl font-bold">Profile</h1>
-      <div className="flex flex-row justify-between items-center">
-        <h2 className="text-2xl">{user?.name}</h2>
-        <button className="bg-purple-700 p-3 my-3 md:my-0 rounded-2xl text-md" onClick={signOut}>Sign Out</button>
+      <div className="flex flex-row justify-between items-center my-3">
+        <div className="flex flex-col">
+          <h2 className="text-md">Name:</h2>
+          <p className="text-2xl">{user?.name}</p>
+        </div>
+        <button className="bg-purple-700 p-3 md:my-0 rounded-2xl text-md font-bold" onClick={signOut}>Sign Out</button>
       </div>
       <h2 className="text-2xl font-bold">Favourites</h2><hr></hr>
       <ul>
