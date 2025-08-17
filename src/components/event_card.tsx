@@ -11,7 +11,7 @@ export default function EventCard({ event }: { event: any }) {
     return (
         <Link href={`/event/${event.id}`}>
             <div className="rounded-2xl p-3 bg-(--background) shadow-[0px_0px_12px_3px_#808080]">
-                <img src={event.image} alt={`Cover image for ${event.name}`} className="w-full h-[200px] object-cover rounded-xl mb-3" />
+                {event.image ? (<img src={event.image} alt={`Cover image for ${event.name}`} className="w-full h-[200px] object-cover rounded-xl mb-3" />) : null}
                 <h2 className="text-xl font-bold">{event.name}</h2>
                 <p className="text-md font-bold">Hosted by {hostClubs.join(", ")}</p>
 

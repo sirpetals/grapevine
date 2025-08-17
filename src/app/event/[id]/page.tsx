@@ -18,7 +18,7 @@ export default async function EventDescription({
 
     return (
         <div>
-            <img src={eventData.image} className="w-full h-[300px] object-cover rounded-xl mb-3"/>
+            {eventData.image ? (<img src={eventData.image} className="w-full h-[300px] object-cover rounded-xl mb-3"/>) : null}
             <div className="flex flex-row my-2">
                 {eventData.tags?.map((tag: String, index: number) => <Tag key={index} text={tag}/>)}
             </div>
