@@ -128,8 +128,8 @@ export async function GET(request: Request) {
   const supabase = await createServiceClient();
 
   // // UQIES - Luma
-  // const uqiesData = await getLumaEvents("https://lu.ma/uqies25");
-  // updateDatabase(uqiesData, "UQIES");
+  const uqiesData = await getLumaEvents("https://lu.ma/uqies25");
+  updateDatabase(uqiesData, "UQIES");
 
   const cozyGamersData = await getHumanitixEvents("https://events.humanitix.com/host/lee-president", "Cosy Gamers Club");
   const result = await updateDatabase(cozyGamersData, "Cozy Gamers Club");
