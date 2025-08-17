@@ -127,21 +127,40 @@ async function updateDatabase(data: Event[], clubName: string): Promise<{success
 export async function GET(request: Request) {
   const supabase = await createServiceClient();
 
-  // // UQIES - Luma
+  // UQIES - Luma
   const uqiesData = await getLumaEvents("https://lu.ma/uqies25");
-  updateDatabase(uqiesData, "UQIES");
+  let result = await updateDatabase(uqiesData, "UQIES");
 
-  const cozyGamersData = await getHumanitixEvents("https://events.humanitix.com/host/lee-president", "Cosy Gamers Club");
-  const result = await updateDatabase(cozyGamersData, "Cozy Gamers Club");
-  
-  if (result.success) {
+  if (result.error) {
     return Response.json({
-      status: 200
-    }); 
+      status: 400,
+      error: result.error
+    });
+  }
+
+  // Cosy Gamers
+  const cozyGamersData = await getHumanitixEvents("https://events.humanitix.com/host/lee-president", "Cosy Gamers Club");
+  result = await updateDatabase(cozyGamersData, "Cozy Gamers Club");
+
+  if (result.error) {
+    return Response.json({
+      status: 400,
+      error: result.error
+    });
+  }
+
+  // UQCS
+  const uqcsData = await getHumanitixEvents("https://events.humanitix.com/host/60ec12652dec10000a6e79df", "UQCS");
+  result = await updateDatabase(uqcsData, "UQCS");
+
+  if (result.error) {
+    return Response.json({
+      status: 400,
+      error: result.error
+    });
   }
 
   return Response.json({
-    status: 400,
-    error: result.error
+    status: 200
   });
 }
