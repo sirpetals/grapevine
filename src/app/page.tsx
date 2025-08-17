@@ -3,7 +3,11 @@ import EventCard from "@/src/components/event_card";
 
 export default async function Events() {
   const supabase = await createClientServer();
-  const { data } = await supabase.from("events").select("*, clubs:host_events(clubs(name))").or(`datetime.gte.${new Date().toISOString()},datetime.is.NULL`);
+  const { data } = await supabase
+    .from("events")
+    .select("*, clubs:host_events(clubs(name))")
+    .or(`datetime.gte.${new Date().toISOString()},datetime.is.NULL`)
+    .order("datetime", {ascending: true});
 
   return (
     <div>

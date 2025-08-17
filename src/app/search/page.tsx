@@ -13,13 +13,22 @@ export default function Search() {
   async function search() {
     const supabase = createClient();
     if (field == "name") {
-      const results = await supabase.from("events").select("*, clubs:host_events(clubs(name))").ilike("name", `%${value}%`).or(`datetime.gte.${new Date().toISOString()},datetime.is.NULL`);
+      const results = await supabase.from("events")
+        .select("*, clubs:host_events(clubs(name))")
+        .ilike("name", `%${value}%`)
+        .or(`datetime.gte.${new Date().toISOString()},datetime.is.NULL`)
+        .order("datetime", {ascending: true});
 
       if (results.error == null) {
         setEvents(results.data);
       }
     } else if (field == "tags") {
-      const results = await supabase.from("events").select("*, clubs:host_events(clubs(name))").overlaps("tags", value.split(", ")).or(`datetime.gte.${new Date().toISOString()},datetime.is.NULL`);
+      const results = await supabase
+        .from("events")
+        .select("*, clubs:host_events(clubs(name))")
+        .overlaps("tags", value.split(", "))
+        .or(`datetime.gte.${new Date().toISOString()},datetime.is.NULL`)
+        .order("datetime", {ascending: true});
 
       if (results.error == null) {
         setEvents(results.data);
