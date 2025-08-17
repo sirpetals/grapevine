@@ -49,15 +49,15 @@ export default function Favourites() {
         <button className="bg-purple-700 p-3 md:my-0 rounded-2xl text-md font-bold" onClick={signOut}>Sign Out</button>
       </div>
       <h2 className="text-2xl font-bold">Favourites</h2><hr></hr>
-      <ul>
-      {favourites?.map(event => {
-        return (
-          <div key={event.id} className="my-6">
-            <EventCard event={event}/>
-          </div>
-        );
-      })}
-      </ul>
+      <div className="flex flex-col md:flex-row md_flex-wrap">
+        {favourites?.map(event => {
+          return (
+            <div key={event.id} className="my-6 md:w-75 md:mx-5">
+              <EventCard event={event}/>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -12,15 +12,15 @@ export default async function Events() {
   return (
     <div>
       <h1 className="text-4xl font-bold">Events</h1>
-      <ul>
+      <div className="flex flex-col md:flex-row md:flex-wrap">
         {data?.map(event => {
           return (
-            <div key={event.id} className="my-6">
+            <div key={event.id} className="my-6 md:w-75 md:mx-5">
               <EventCard event={event}/>
             </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }

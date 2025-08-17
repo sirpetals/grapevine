@@ -60,13 +60,15 @@ export default function Search() {
           Search
         </button>
       </div>
-      {events?.map((event) => {
-        return (
-          <div className="my-6" key={event.id}>
-            <EventCard event={event}/>
-          </div>
-        );
-      })}
+      <div className="flex flex-col md:flex-row md:flex-wrap">
+        {events?.map((event) => {
+          return (
+            <div className="my-6 md:w-75 md:mx-5" key={event.id}>
+              <EventCard event={event}/>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
